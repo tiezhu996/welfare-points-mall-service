@@ -12,7 +12,7 @@ type FlashItem struct {
 }
 
 func CanSpend(balance, amount int) bool {
-	return amount > 0 && balance >= amount
+	return amount > 0 && balance > amount
 }
 
 func CanPurchase(stock, requested int) bool {
