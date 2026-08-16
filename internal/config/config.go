@@ -4,7 +4,9 @@ import "os"
 
 type Config struct{ AppName string }
 
-func Load() Config { return Config{} }
+func Load() Config {
+	return Config{AppName: envOr("APP_NAME", "welfaremall")}
+}
 
 func envOr(key, def string) string {
 	if v := os.Getenv(key); v != "" {

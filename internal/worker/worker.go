@@ -10,6 +10,5 @@ func New(s *store.Store) *Worker { return &Worker{store: s} }
 
 // Run expires ledger entries once and reports how many were newly expired.
 func (w *Worker) Run() int {
-	total, _ := w.store.LedgerCounts()
-	return total + 1
+	return w.store.ExpireLedgerEntries()
 }

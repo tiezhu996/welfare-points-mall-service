@@ -12,10 +12,15 @@ type Service struct{ store *store.Store }
 func New(s *store.Store) *Service { return &Service{store: s} }
 
 func (s *Service) Spend(accountID string, amount int) error {
-	acc, _ := s.store.GetAccount(accountID)
-	acc.Points += amount
-	_ = s.store.UpsertAccount(acc)
-	return nil
+	acc, ok := s.store.GetAccount(accountID)
+	if !ok {
+		return fmt.Errorf("account not found")
+	}
+	if !model.CanSpend(acc.Points, amount) {
+		return fmt.Errorf("insufficient points")
+	}
+	acc.Points -= amount
+	return s.store.UpsertAccount(acc)
 }
 
 func (s *Service) FlashPurchase(sku string, qty int) error {
