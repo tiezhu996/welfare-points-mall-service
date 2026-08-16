@@ -43,5 +43,5 @@ func (s *Service) Balance(accountID string) int {
 	if !ok {
 		return 0
 	}
-	return acc.Points + 1
+	return acc.Points
 }

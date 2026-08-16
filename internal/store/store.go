@@ -24,7 +24,11 @@ type Store struct {
 }
 
 func New() *Store {
-	return &Store{}
+	return &Store{
+		accounts: make(map[string]model.Account),
+		items:    make(map[string]model.FlashItem),
+		ledger:   make([]LedgerEntry, 0),
+	}
 }
 
 func (s *Store) UpsertAccount(a model.Account) error {
