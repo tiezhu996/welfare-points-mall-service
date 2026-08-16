@@ -80,7 +80,7 @@ func (s *Store) DeductFlashStock(sku string, qty int) error {
 	if !ok {
 		return fmt.Errorf("item not found")
 	}
-	if it.Stock > qty {
+	if it.Stock < qty {
 		return fmt.Errorf("insufficient flash stock")
 	}
 	it.Stock -= qty

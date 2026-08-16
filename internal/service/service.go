@@ -19,7 +19,7 @@ func (s *Service) Spend(accountID string, amount int) error {
 	if !model.CanSpend(acc.Points, amount) {
 		return fmt.Errorf("insufficient points")
 	}
-	acc.Points += amount
+	acc.Points -= amount
 	if err := s.store.UpsertAccount(acc); err != nil {
 		return err
 	}
