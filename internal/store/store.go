@@ -74,11 +74,17 @@ func (s *Store) GetFlashItem(sku string) (model.FlashItem, bool) {
 }
 
 func (s *Store) DeductFlashStock(sku string, qty int) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	it, ok := s.items[sku]
 	if !ok {
-		return nil
+		return fmt.Errorf("item not found")
+	}
+	if it.Stock < qty {
+		return fmt.Errorf("insufficient flash stock")
 	}
 	it.Stock -= qty
+	s.items[sku] = it
 	return nil
 }
 
